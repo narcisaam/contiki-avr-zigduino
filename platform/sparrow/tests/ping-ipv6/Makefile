@@ -1,3 +1,4 @@
+CFLAGS += -g -Wno-deprecated-declarations -D__PROG_TYPES_COMPAT__
 CONTIKI_PROJECT = ping-ipv6
 all: $(CONTIKI_PROJECT)
 CONTIKI_TARGET_SOURCEFILES += ping6.c 

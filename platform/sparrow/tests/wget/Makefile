@@ -1,3 +1,4 @@
+CFLAGS += -g -Wno-deprecated-declarations -D__PROG_TYPES_COMPAT__
 CONTIKI_PROJECT = wget
 all: $(CONTIKI_PROJECT)
 
