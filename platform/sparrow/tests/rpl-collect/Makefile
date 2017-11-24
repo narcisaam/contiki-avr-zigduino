@@ -5,7 +5,7 @@ PROJECT_SOURCEFILES += collect-common.c
 
 WITH_UIP6=1
 UIP_CONF_IPV6=1
-TARGET=avr-zigduino
+TARGET=sparrow
 CFLAGS += -DNODE=$(NODE)
 all: $(CONTIKI_PROJECT)
 
