@@ -49,11 +49,11 @@
 #include "net/sicslowpan.h"
 
 #if !RF230BB        //radio driver using contiki core mac
-#error Zigduino has only been tested with RF230BB
+#error Sparrow has only been tested with RF230BB
 #endif /*RF230BB*/
 
 #if !UIP_CONF_IPV6
-#error Zigduino has only been tested with IPv6
+#error Sparrow has only been tested with IPv6
 #endif
 
 #include "contiki.h"
@@ -68,10 +68,10 @@
 #include "dev/button-sensor.h"
 #include "dev/leds.h"
 
-// This Zidguino implementation presumes a single button 'sensor'
+// This implementation presumes a single button 'sensor'
 SENSORS(&button_sensor);
 
-// Zigduino has not been tested with Rime.
+// Sparrow has not been tested with Rime.
 #if 0
 #if UIP_CONF_ROUTER&&0
 #include "net/routing/rimeroute.h"
@@ -201,7 +201,7 @@ void initialize(void)
 #endif
 
 #if UIP_CONF_ROUTER
-//#warning Zigduino has not been tested with UIP_CONF_ROUTER
+//#warning: has not been tested with UIP_CONF_ROUTER
 #if ANNOUNCE_BOOT
   PRINTA("Routing Enabled\n");
 #endif
@@ -236,7 +236,7 @@ void initialize(void)
   {
     printf("*** Failed to add a route to fec0::/64\n");
   }
- 
+
   printf("Autostart other processes\n");
   /* Autostart other processes */
   autostart_start(autostart_processes);

@@ -160,7 +160,7 @@ collect_common_send(void)
 void
 collect_common_net_init(void)
 {
-// Zigduino already sets up serial lines in main
+// Board already sets up serial lines in main
 }
 /*---------------------------------------------------------------------------*/
 static void

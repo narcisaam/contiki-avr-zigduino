@@ -5,7 +5,7 @@ CFLAGS += -DNODE=$(NODE)
 	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \
 	--change-section-lma .eeprom=0 -O ihex $^ $@
 
-TARGET = avr-zigduino
+TARGET = sparrow
 CONTIKI = ../../../..
 
 include $(CONTIKI)/Makefile.include

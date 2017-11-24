@@ -5,6 +5,6 @@ APPS = serial-shell
 CONTIKI = ../../../..
 CONTIKI_TARGET_SOURCEFILES += shell-udphello.c shell-udp-sendcmd.c
 UIP_CONF_IPV6=1
-TARGET=avr-zigduino
+TARGET=sparrow
 
 include $(CONTIKI)/Makefile.include

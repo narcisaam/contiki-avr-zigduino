@@ -77,7 +77,7 @@ collect_common_send(void)
 void
 collect_common_net_init(void)
 {
-// Zigduino already sets up serial output in main
+// Serial output in already set up main
   PRINTF("I am sink!\n");
 }
 /*---------------------------------------------------------------------------*/

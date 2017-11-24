@@ -60,7 +60,7 @@ PROCESS_THREAD(example_shell_process, ev, data)
 {
   PROCESS_BEGIN();
 
-  /* Only shell components proven to work on Zigduino */
+  /* Only shell components proven to work on this platform */
   serial_shell_init();
   shell_blink_init();
 
