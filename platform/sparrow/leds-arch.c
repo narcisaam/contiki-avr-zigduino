@@ -50,15 +50,13 @@
  */
 #define LED_PORT0                        (PORTB)
 #define LED_PORT_DIR0                    (DDRB)
-#define LED_PORT                        (PORTD)
-#define LED_PORT_DIR                    (DDRD)
 
 /*
  * PINs where LEDs are connected
  */
-#define LED_PIN_0                       (PB1)
-#define LED_PIN_1                       (PD5)
-#define LED_PIN_2                       (PD6)
+#define LED_PIN_0                       (PB4)
+#define LED_PIN_1                       (PB5)
+#define LED_PIN_2                       (PB6)
 
 /*---------------------------------------------------------------------------*/
 void
@@ -66,10 +64,10 @@ leds_arch_init(void)
 {
   LED_PORT0 |= (1 << LED_PIN_0);
   LED_PORT_DIR0 |= (1 << LED_PIN_0);
-  LED_PORT |= (1 << LED_PIN_1);
-  LED_PORT_DIR |= (1 << LED_PIN_1);
-  LED_PORT |= (1 << LED_PIN_2);
-  LED_PORT_DIR |= (1 << LED_PIN_2);
+  LED_PORT0 |= (1 << LED_PIN_1);
+  LED_PORT_DIR0 |= (1 << LED_PIN_1);
+  LED_PORT0 |= (1 << LED_PIN_2);
+  LED_PORT_DIR0 |= (1 << LED_PIN_2);
 }
 /*---------------------------------------------------------------------------*/
 unsigned char
@@ -79,9 +77,9 @@ leds_arch_get(void)
 
   if ( LED_PORT0 & _BV(LED_PIN_0 ) )
     result |= LEDS_GREEN;
-  if ( LED_PORT & _BV(LED_PIN_1 ) )
+  if ( LED_PORT0 & _BV(LED_PIN_1 ) )
     result |= LEDS_YELLOW;
-  if ( LED_PORT & _BV(LED_PIN_2 ) )
+  if ( LED_PORT0 & _BV(LED_PIN_2 ) )
     result |= LEDS_RED;
 
   return result;
@@ -91,7 +89,7 @@ leds_arch_get(void)
 void
 leds_arch_set(unsigned char leds)
 {
-  uint8_t led_port = LED_PORT;
+  uint8_t led_port = LED_PORT0;
 
   LED_PORT0 &= ~_BV(LED_PIN_0);
   if ( leds & LEDS_GREEN )
@@ -105,6 +103,6 @@ leds_arch_set(unsigned char leds)
   if ( leds & LEDS_RED )
     led_port |= _BV(LED_PIN_2);
 
-  LED_PORT = led_port;
+  LED_PORT0 = led_port;
 }
 /*---------------------------------------------------------------------------*/
