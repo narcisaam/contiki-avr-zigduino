@@ -91,17 +91,17 @@ leds_arch_set(unsigned char leds)
 {
   uint8_t led_port = LED_PORT0;
 
-  LED_PORT0 &= ~_BV(LED_PIN_0);
+  LED_PORT0 |= _BV(LED_PIN_0);
   if ( leds & LEDS_GREEN )
-    LED_PORT0 |= _BV(LED_PIN_0);
+    LED_PORT0 &= ~_BV(LED_PIN_0);
 
-  led_port &= ~_BV(LED_PIN_1);
+  led_port |= _BV(LED_PIN_1);
   if ( leds & LEDS_YELLOW )
-    led_port |= _BV(LED_PIN_1);
+    led_port &= ~_BV(LED_PIN_1);
 
-  led_port &= ~_BV(LED_PIN_2);
+  led_port |= _BV(LED_PIN_2);
   if ( leds & LEDS_RED )
-    led_port |= _BV(LED_PIN_2);
+    led_port &= ~_BV(LED_PIN_2);
 
   LED_PORT0 = led_port;
 }
