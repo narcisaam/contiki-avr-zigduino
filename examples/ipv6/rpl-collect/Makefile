@@ -1,3 +1,4 @@
+CFLAGS += -g -Wno-deprecated-declarations -D__PROG_TYPES_COMPAT__
 CONTIKI = ../../..
 APPS = powertrace collect-view
 CONTIKI_PROJECT = udp-sender udp-sink

@@ -7,6 +7,7 @@ WITH_UIP6=1
 UIP_CONF_IPV6=1
 
 CFLAGS += -DPROJECT_CONF_H=\"project-conf.h\"
+CFLAGS += -g -Wno-deprecated-declarations -D__PROG_TYPES_COMPAT__
 PROJECT_SOURCEFILES += slip-bridge.c
 
 #Simple built-in webserver is the default.
