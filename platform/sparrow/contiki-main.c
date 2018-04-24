@@ -68,6 +68,8 @@
 #include "dev/button-sensor.h"
 #include "dev/leds.h"
 
+#include "timer2.h"
+
 // This implementation presumes a single button 'sensor'
 SENSORS(&button_sensor);
 
@@ -275,11 +277,11 @@ main(void)
 {
 
   initialize();
-
+  timer2_init();
   while(1)
   {
     process_run();
-
+    sparrow_sleep();
     //watchdog_periodic();
 
 
