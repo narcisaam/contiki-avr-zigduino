@@ -2,7 +2,7 @@ CONTIKI_TARGET_DIRS = . dev apps net loader
 
 CONTIKI_CORE=contiki-main
 CONTIKI_TARGET_MAIN = ${CONTIKI_CORE}.o
-CONTIKI_TARGET_SOURCEFILES += $(CONTIKI_CORE).c leds-arch.c adc.c button-sensor.c sensors.c temperature-sensor.c battery-sensor.c
+CONTIKI_TARGET_SOURCEFILES += $(CONTIKI_CORE).c leds-arch.c adc.c button-sensor.c sensors.c temperature-sensor.c battery-sensor.c si7020-driver.c i2c.c timer2.c
 CONTIKI_AVR=$(CONTIKI)/cpu/avr
 CONTIKI_PLAT_DEFS = -DF_CPU=16000000UL -DAUTO_CRC_PADDING=2
 
