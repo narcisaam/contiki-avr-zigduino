@@ -1,13 +1,14 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 
-#include "sys/etimer.h"
 #include "timer2.h"
+
+extern struct process rest_engine_process;
 
 ISR(TIMER2_OVF_vect)
 {
   tot_overflow++;
-  etimer_request_poll();
+  process_poll(&rest_engine_process);
 }
 
 void timer2_init()
