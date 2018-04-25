@@ -63,7 +63,7 @@
  * Resources to be activated need to be imported through the extern keyword.
  * The build system automatically compiles the resources in the corresponding sub-directory.
  */
-extern resource_t res_hello;
+//extern resource_t res_hello;
 
 #if PLATFORM_HAS_TEMPERATURE
 #include "dev/si7020-driver.h"
@@ -101,7 +101,7 @@ PROCESS_THREAD(er_example_server, ev, data)
    * WARNING: Activating twice only means alternate path, not two instances!
    * All static variables are the same for each URI path.
    */
-  rest_activate_resource(&res_hello, "test/hello");
+  //rest_activate_resource(&res_hello, "test/hello");
 #if PLATFORM_HAS_TEMPERATURE
   rest_activate_resource(&res_temperature, "sensors/temperature");
   SENSORS_ACTIVATE(si7020_sensor);
