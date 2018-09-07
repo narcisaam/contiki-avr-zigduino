@@ -202,7 +202,7 @@ PROCESS_THREAD(rest_engine_process, ev, data)
   /* initialize the PERIODIC_RESOURCE timers, which will be handled by this process. */
   periodic_resource_t *periodic_resource = NULL;
 
-  for(periodic_resource =
+  /*for(periodic_resource =
         (periodic_resource_t *)list_head(restful_periodic_services);
       periodic_resource; periodic_resource = periodic_resource->next) {
     if(periodic_resource->periodic_handler && periodic_resource->period) {
@@ -211,27 +211,31 @@ PROCESS_THREAD(rest_engine_process, ev, data)
       etimer_set(&periodic_resource->periodic_timer,
                  periodic_resource->period);
     }
-  }
+  }*/
   while(1) {
     PROCESS_WAIT_EVENT();
 
-    if(ev == PROCESS_EVENT_TIMER) {
+    if(ev == PROCESS_EVENT_TIMER || ev == PROCESS_EVENT_POLL) {
       for(periodic_resource =
             (periodic_resource_t *)list_head(restful_periodic_services);
           periodic_resource; periodic_resource = periodic_resource->next) {
-        //if(periodic_resource->period
-        //   && etimer_expired(&periodic_resource->periodic_timer)) {
+
+          // Call the periodic_handler function, which was checked during adding to list.
+          (periodic_resource->periodic_handler)();
+
+       /* if(periodic_resource->period
+           && etimer_expired(&periodic_resource->periodic_timer)) {
           PRINTF("Periodic: etimer expired for /%s (period: %lu)\n",
                  periodic_resource->resource->url, periodic_resource->period);
 
-          /* Call the periodic_handler function, which was checked during adding to list. */
+          // Call the periodic_handler function, which was checked during adding to list.
           (periodic_resource->periodic_handler)();
 
           etimer_reset(&periodic_resource->periodic_timer);
-        //}
+        }*/
       }
     }
-  }
+  } /* while 1*/
 
   PROCESS_END();
 }

@@ -62,12 +62,12 @@
 void
 leds_arch_init(void)
 {
-  LED_PORT0 |= (1 << LED_PIN_0);
-  LED_PORT_DIR0 |= (1 << LED_PIN_0);
-  LED_PORT0 |= (1 << LED_PIN_1);
-  LED_PORT_DIR0 |= (1 << LED_PIN_1);
-  LED_PORT0 |= (1 << LED_PIN_2);
-  LED_PORT_DIR0 |= (1 << LED_PIN_2);
+  LED_PORT0 &= ~(1 << LED_PIN_0);
+  LED_PORT_DIR0 &= ~(1 << LED_PIN_0);
+  LED_PORT0 &= ~(1 << LED_PIN_1);
+  LED_PORT_DIR0 &= ~(1 << LED_PIN_1);
+  LED_PORT0 &= ~(1 << LED_PIN_2);
+  LED_PORT_DIR0 &= ~(1 << LED_PIN_2);
 }
 /*---------------------------------------------------------------------------*/
 unsigned char

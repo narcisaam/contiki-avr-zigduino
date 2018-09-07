@@ -168,13 +168,14 @@ unsigned long clock_seconds(void);
 #define UIP_CONF_IPV6_REASSEMBLY 0
 
 #define UIP_CONF_UDP_CHECKSUMS   1
-#define UIP_CONF_TCP_SPLIT       1
+#define UIP_CONF_TCP_SPLIT       0
 #define UIP_CONF_DHCP_LIGHT      1
 
 
 #if 1 /* No radio cycling */
 
 #define NETSTACK_CONF_MAC         nullmac_driver
+//#undef NETSTACK_CONF_MAC
 #define NETSTACK_CONF_RDC         sicslowmac_driver
 #define NETSTACK_CONF_FRAMER      framer_802154
 #define NETSTACK_CONF_RADIO       rf230_driver
@@ -273,6 +274,9 @@ unsigned long clock_seconds(void);
 
 #define CCIF
 #define CLIF
+
+/* Sensors */
+#define PLATFORM_HAS_TEMPERATURE 1
 
 /* include the project config */
 /* PROJECT_CONF_H might be defined in the project Makefile */

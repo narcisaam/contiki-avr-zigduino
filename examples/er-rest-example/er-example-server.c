@@ -66,9 +66,10 @@
 //extern resource_t res_hello;
 
 #if PLATFORM_HAS_TEMPERATURE
-#include "dev/si7020-driver.h"
+#include "dev/temperature-sensor.h"
 extern resource_t res_temperature;
 #endif
+extern resource_t res_hello;
 
 PROCESS(er_example_server, "Erbium Example Server");
 AUTOSTART_PROCESSES(&er_example_server);
@@ -101,10 +102,10 @@ PROCESS_THREAD(er_example_server, ev, data)
    * WARNING: Activating twice only means alternate path, not two instances!
    * All static variables are the same for each URI path.
    */
-  //rest_activate_resource(&res_hello, "test/hello");
+  rest_activate_resource(&res_hello, "test/hello");
 #if PLATFORM_HAS_TEMPERATURE
   rest_activate_resource(&res_temperature, "sensors/temperature");
-  SENSORS_ACTIVATE(si7020_sensor);
+  SENSORS_ACTIVATE(temperature_sensor);
 #endif
 
   /* Define application-specific events here. */

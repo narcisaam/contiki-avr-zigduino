@@ -35,7 +35,7 @@
 
  /* Below define allows importing saved output into Wireshark as "Raw IP" packet type */
 #define WIRESHARK_IMPORT_FORMAT 1
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -117,7 +117,7 @@ stamptime(void)
   time_t t;
   struct tm *tmp;
   char timec[20];
- 
+
   gettimeofday(&tv, NULL) ;
   msecs=tv.tv_usec/1000;
   secs=tv.tv_sec;
@@ -227,7 +227,7 @@ serial_to_tun(FILE *inslip, int outfd)
           if(timestamp) stamptime();
           fprintf(stderr,"*** Address:%s => %02x%02x:%02x%02x:%02x%02x:%02x%02x\n",
  //         printf("*** Address:%s => %02x%02x:%02x%02x:%02x%02x:%02x%02x\n",
-		 ipaddr, 
+		 ipaddr,
 		 addr.s6_addr[0], addr.s6_addr[1],
 		 addr.s6_addr[2], addr.s6_addr[3],
 		 addr.s6_addr[4], addr.s6_addr[5],
@@ -241,7 +241,7 @@ serial_to_tun(FILE *inslip, int outfd)
 	  slip_send(slipfd, SLIP_END);
         }
 #define DEBUG_LINE_MARKER '\r'
-      } else if(uip.inbuf[0] == DEBUG_LINE_MARKER) {    
+      } else if(uip.inbuf[0] == DEBUG_LINE_MARKER) {
 	fwrite(uip.inbuf + 1, inbufptr - 1, 1, stdout);
       } else if(is_sensible_string(uip.inbuf, inbufptr)) {
         if(verbose==1) {   /* strings already echoed below for verbose>1 */
@@ -311,7 +311,7 @@ serial_to_tun(FILE *inslip, int outfd)
         if(c=='\n') if(timestamp) stamptime();
       }
     }
-    
+
     break;
   }
 
@@ -359,7 +359,7 @@ void
 slip_flushbuf(int fd)
 {
   int n;
-  
+
   if(slip_empty()) {
     return;
   }
@@ -406,7 +406,7 @@ write_to_serial(int outfd, void *inbuf, int len)
   /* It would be ``nice'' to send a SLIP_END here but it's not
    * really necessary.
    */
-  /* slip_send(outfd, SLIP_END); */
+  slip_send(outfd, SLIP_END);
 
   for(i = 0; i < len; i++) {
     switch(p[i]) {
@@ -635,7 +635,7 @@ main(int argc, char **argv)
     case 'H':
       flowcontrol=1;
       break;
- 
+
     case 'L':
       timestamp=1;
       break;
@@ -677,7 +677,7 @@ main(int argc, char **argv)
     case 'T':
       tap = 1;
       break;
- 
+
     case '?':
     case 'h':
     default:
@@ -857,7 +857,7 @@ exit(1);
 
     FD_SET(slipfd, &rset);	/* Read from slip ASAP! */
     if(slipfd > maxfd) maxfd = slipfd;
-    
+
     /* We only have one packet at a time queued for slip output. */
     if(slip_empty()) {
       FD_SET(tunfd, &rset);
@@ -871,12 +871,12 @@ exit(1);
       if(FD_ISSET(slipfd, &rset)) {
         serial_to_tun(inslip, tunfd);
       }
-      
+
       if(FD_ISSET(slipfd, &wset)) {
 	slip_flushbuf(slipfd);
 	sigalarm_reset();
       }
- 
+
       /* Optional delay between outgoing packets */
       /* Base delay times number of 6lowpan fragments to be sent */
       if(delaymsec) {

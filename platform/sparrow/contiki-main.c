@@ -38,6 +38,7 @@
 #include <avr/eeprom.h>
 #include <stdio.h>
 #include <string.h>
+#include <util/delay.h>
 //#include <dev/watchdog.h>
 
 //#include "loader/symbols-def.h"
@@ -138,6 +139,7 @@ void initialize(void)
   if(MCUSR & (1<<BORF )) PRINTA("Brownout reset!\n");
   if(MCUSR & (1<<WDRF )) PRINTA("Watchdog reset!\n");
   if(MCUSR & (1<<JTRF )) PRINTA("JTAG reset!\n");
+  MCUSR = 0;
 
 #if ANNOUNCE_BOOT
   PRINTA("\n*******Booting %s*******\n",CONTIKI_VERSION_STRING);
@@ -239,8 +241,15 @@ void initialize(void)
     printf("*** Failed to add a route to fec0::/64\n");
   }
 
+  uint8_t i;
   printf("Autostart other processes\n");
   /* Autostart other processes */
+  if (autostart_processes != NULL)
+  {
+    for (i = 0; autostart_processes[i] != NULL; ++i){
+      printf("%s\n", autostart_processes[i]->name);
+    }
+  }
   autostart_start(autostart_processes);
 
   /*--------------------------Announce the configuration---------------------*/
@@ -248,7 +257,6 @@ void initialize(void)
 
   extern uip_ds6_netif_t uip_ds6_if;
 
-  uint8_t i;
   PRINTA("\nIP addresses [%u max]\n",UIP_DS6_ADDR_NB);
   for (i=0; i<UIP_DS6_ADDR_NB; i++)
   {
@@ -268,49 +276,61 @@ void log_message(char *m1, char *m2)
 }
 
 extern char rf230_interrupt_flag, rf230processflag;
-
+//extern struct process border_router_process;
+//extern struct process rest_engine_process;
 /*-------------------------------------------------------------------------*/
 /*------------------------- Main Scheduler loop----------------------------*/
 /*-------------------------------------------------------------------------*/
-int
-main(void)
+int main(void)
 {
 
   initialize();
-  timer2_init();
+
+  //DDRE = 0xff;
+  //PORTE = 0xff;
+  //drtram0 - endrt (cand pui in power_down)
+ // sleep_init();
+  //timer2_init();
+  //autostart_start(&border_router_process);
+  //printf("here\n");
   while(1)
   {
+   // sleep_set(4);
+
+    //PORTB |= 0x01;
+    //process_poll(&border_router_process);
     process_run();
-    sparrow_sleep();
-    //watchdog_periodic();
+   // printf("OVER: %d\n", tot_overflow);
+    //PORTB &= 0xFE;
+    //sleep_sparrow();
 
 
-//Use with RF230BB DEBUGFLOW to show path through driver
-#if RF230BB&&0
-    extern uint8_t debugflowsize,debugflow[];
-    if (debugflowsize)
-    {
-      debugflow[debugflowsize]=0;
-      PRINTA("%s",debugflow);
-      debugflowsize=0;
-    }
-#endif
+// //Use with RF230BB DEBUGFLOW to show path through driver
+// #if RF230BB&&0
+//     extern uint8_t debugflowsize,debugflow[];
+//     if (debugflowsize)
+//     {
+//       debugflow[debugflowsize]=0;
+//       PRINTA("%s",debugflow);
+//       debugflowsize=0;
+//     }
+// #endif
 
-#if RF230BB&&0
-    if (rf230processflag)
-    {
-      PRINTA("rf230p%d",rf230processflag);
-      rf230processflag=0;
-    }
-#endif
+// #if RF230BB&&0
+//     if (rf230processflag)
+//     {
+//       PRINTA("rf230p%d",rf230processflag);
+//       rf230processflag=0;
+//     }
+// #endif
 
-#if RF230BB&&0
-    if (rf230_interrupt_flag)
-    {
-      PRINTA("**RI%u",rf230_interrupt_flag);
-      rf230_interrupt_flag=0;
-    }
-#endif
+// #if RF230BB&&0
+//     if (rf230_interrupt_flag)
+//     {
+//       PRINTA("**RI%u",rf230_interrupt_flag);
+//       rf230_interrupt_flag=0;
+//     }
+// #endif
   }
   return 0;
 }

@@ -216,15 +216,19 @@ PROCESS_THREAD(border_router_process, ev, data)
   PROCESS_BEGIN();
   prefix_set = 0;
 
-  PROCESS_PAUSE();
+  //PROCESS_PAUSE();
 
-  SENSORS_ACTIVATE(button_sensor);
+  //SENSORS_ACTIVATE(button_sensor);
 
   PRINTF("RPL-Border router started\n");
 
+  uip_buf[0] = 0;
+  uip_buf[1] = 192;
+  slip_send();
   /* Request prefix until it has been received */
   while(!prefix_set) {
     etimer_set(&et, CLOCK_SECOND);
+    printf("requesting prefix\n");
     request_prefix();
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
   }

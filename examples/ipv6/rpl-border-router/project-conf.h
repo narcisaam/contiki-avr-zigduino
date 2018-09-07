@@ -32,6 +32,11 @@
 #ifndef __PROJECT_ROUTER_CONF_H__
 #define __PROJECT_ROUTER_CONF_H__
 
+#undef RF_CORE_CONF_CHANNEL
+#define RF_CORE_CONF_CHANNEL 26
+
+#define RF_CHANNEL 26
+
 #ifndef UIP_FALLBACK_INTERFACE
 #define UIP_FALLBACK_INTERFACE rpl_interface
 #endif

@@ -45,9 +45,8 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "rest-engine.h"
-#include "dev/si7020-driver.h"
+#include "dev/temperature-sensor.h"
 
 static void res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_periodic_handler(void);
@@ -55,7 +54,7 @@ static void res_periodic_handler(void);
 #define MAX_AGE      60
 #define INTERVAL_MIN 5
 #define INTERVAL_MAX (MAX_AGE - 1)
-#define CHANGE       1
+#define CHANGE       1 
 
 static int32_t interval_counter = INTERVAL_MIN;
 static int temperature_old = INT_MIN;
@@ -66,7 +65,7 @@ PERIODIC_RESOURCE(res_temperature,
          NULL,
          NULL,
          NULL,
-         CLOCK_SECOND * 8,
+         CLOCK_SECOND,
          res_periodic_handler);
 
 static void
@@ -78,11 +77,7 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
    * This would be a TODO in the corresponding files in contiki/apps/erbium/!
    */
 
-  int temperature = 12;// si7020_sensor.value(0);
-
-  //printf("res-temp-get\n");
-  //srand(clock_seconds());   // should only be called once
-  //temperature = rand();
+  int temperature = temperature_sensor.value(0);
 
   unsigned int accept = -1;
   REST.get_header_accept(request, &accept);
@@ -115,13 +110,12 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
 static void
 res_periodic_handler()
 {
-  int temperature = 1; //si7020_sensor.value(0);
+  int temperature = temperature_sensor.value(0);
 
   ++interval_counter;
 
-  printf("handl\n");
-  if((abs(temperature - temperature_old) >= CHANGE && interval_counter >= INTERVAL_MIN) ||
-         interval_counter >= INTERVAL_MAX) {
+  if((abs(temperature - temperature_old) >= CHANGE && interval_counter >= INTERVAL_MIN) || 
+     interval_counter >= INTERVAL_MAX) {
      interval_counter = 0;
      temperature_old = temperature;
     /* Notify the registered observers which will trigger the res_get_handler to create the response. */
