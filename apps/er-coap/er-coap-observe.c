@@ -40,7 +40,7 @@
 #include <string.h>
 #include "er-coap-observe.h"
 
-#define DEBUG 0
+#define DEBUG 1
 #if DEBUG
 #include <stdio.h>
 #define PRINTF(...) printf(__VA_ARGS__)
@@ -271,6 +271,7 @@ coap_observe_handler(resource_t *resource, void *request, void *response)
   coap_observer_t *obs;
 
   if(coap_req->code == COAP_GET && coap_res->code < 128) { /* GET request and response without error code */
+      printf("GET\n");
     if(IS_OPTION(coap_req, COAP_OPTION_OBSERVE)) {
       if(coap_req->observe == 0) {
         obs = add_observer(&UIP_IP_BUF->srcipaddr, UIP_UDP_BUF->srcport,
